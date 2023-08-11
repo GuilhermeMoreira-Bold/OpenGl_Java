@@ -35,11 +35,17 @@ public class DisplayManager {
         0,1,3,
         3,1,2
     };
-
+    float[] textureCoordinates = {
+        0,0, //V0
+        0,1, //V1
+        1,1, //V2
+        1,0 //V3
+    };
     Loader loader;
     Renderer renderer;
     RawModel model;
     StaticShader shader;
+    Texture texture;
 
 
     public void run(){
@@ -112,7 +118,7 @@ public class DisplayManager {
 
         loader = new Loader();
         renderer = new Renderer();
-        model = loader.loadtoVAO(vertices, indices);
+        model = loader.loadtoVAO(vertices, textureCoordinates,indices);
         shader = new StaticShader();
 
 		// Enable v-sync
@@ -134,6 +140,7 @@ public class DisplayManager {
 
     private void loop(){
         clearColor();
+        loader.loadTexture("img/madeira.jpg");
         while(!glfwWindowShouldClose(this.window)){
             //glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
           // renderer.prepare();
@@ -145,6 +152,7 @@ public class DisplayManager {
         }
         shader.cleanUp();
         loader.cleaneUp();
+        loader.clearTexture();
     }
 
 
